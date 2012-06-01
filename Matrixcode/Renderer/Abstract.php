@@ -1,39 +1,19 @@
 <?php
 /**
- * Zend Framework
+ * Matrixcode_Renderer_Abstract
  *
- * LICENSE
- *
- * This source file is subject to version 1.0 of the Zend Framework
- * license, that is bundled with this package in the file LICENSE.txt, and
- * is available through the world-wide-web at the following URL:
- * http://framework.zend.com/license/new-bsd. If you did not receive
- * a copy of the Zend Framework license and are unable to obtain it
- * through the world-wide-web, please send a note to license@zend.com
- * so we can mail you a copy immediately.
- *
- * @package    Zend_Matrixcode
+ * @package    Matrixcode
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
-
-
-/**
- * Zend_Matrixcode_Renderer_Abstract
- *
- * @package    Zend_Matrixcode
- * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-abstract class Zend_Matrixcode_Renderer_Abstract 
+abstract class Matrixcode_Renderer_Abstract 
 {
 	
 	/**
      * Namespace of the renderer for autoloading
      * @var string
      */
-    protected $_rendererNamespace = 'Zend_Matrixcode_Renderer';
+    protected $_rendererNamespace = 'Matrixcode_Renderer';
     
     /**
      * Renderer type
@@ -43,7 +23,7 @@ abstract class Zend_Matrixcode_Renderer_Abstract
     
     /**
      * Matrixcode object
-     * @var Zend_Matrixcode_Abstract
+     * @var Matrixcode_Abstract
      */
 	protected $_matrixcode;
 	
@@ -76,7 +56,7 @@ abstract class Zend_Matrixcode_Renderer_Abstract
     /**
      * Set matrixcode state from options array
      * @param Zend_Config $config
-     * @return Zend_Matrixcode_Abstract
+     * @return Matrixcode_Abstract
      */
     public function setOptions($options)
     {
@@ -94,7 +74,7 @@ abstract class Zend_Matrixcode_Renderer_Abstract
 	/**
      * Set matrixcode state from config object
      * @param Zend_Config $config
-     * @return Zend_Matrixcode_Abstract
+     * @return Matrixcode_Abstract
      */
     public function setConfig(Zend_Config $config)
     {
@@ -134,9 +114,9 @@ abstract class Zend_Matrixcode_Renderer_Abstract
 	
     /**
      * Set the matrix code
-     * @param Zend_Matrixcode_Abstract $matrixcode
+     * @param Matrixcode_Abstract $matrixcode
      */
-	public function setMatrixcode(Zend_Matrixcode_Abstract $matrixcode)
+	public function setMatrixcode(Matrixcode_Abstract $matrixcode)
 	{
 		$this->_matrixcode = $matrixcode;
 		return $this;

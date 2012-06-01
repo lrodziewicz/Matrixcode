@@ -1,40 +1,19 @@
 <?php
 /**
- * Zend Framework
- *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Matrixcode
- * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-
-
-/**
  * Class for generating matrix codes (2 dimensional scan codes)
  *
- * @category   Zend
- * @package    Zend_Matrixcode
+ * @package    Matrixcode
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Matrixcode
+class Matrixcode
 {
     
     /**
-     * Factory for Zend_Matrixcode_Abstract classes.
+     * Factory for Matrixcode_Abstract classes.
      *
      * First argument should be a string containing the base of the adapter class
-     * name, e.g. 'qrcode' corresponds to class Zend_Matrixcode_Qrcode.  This
+     * name, e.g. 'qrcode' corresponds to class Matrixcode_Qrcode.  This
      * is case-insensitive.
      *
      * First argument may alternatively be an object of type Zend_Config.
@@ -102,7 +81,7 @@ class Zend_Matrixcode
      *
      * @param mixed $matrixcode        String name of matrixcode class, or Zend_Config object.
      * @param mixed $matrixcodeConfig  OPTIONAL; an array or Zend_Config object with matrixcode parameters
-     * @return Zend_Matrixcode_Abstract
+     * @return Matrixcode_Abstract
      */
     public static function getMatrixcode($matrixcode, $matrixcodeConfig = array())
     {
@@ -128,8 +107,8 @@ class Zend_Matrixcode
          * Verify that matrixcode parameters are in an array.
          */
         if (!is_array($matrixcodeConfig)) {
-            require_once 'Zend/Matrixcode/Exception.php';
-            throw new Zend_Matrixcode_Exception(
+            require_once 'Matrixcode/Exception.php';
+            throw new Matrixcode_Exception(
                 'Matrixcode parameters must be in an array or a Zend_Config object'
             );
         }
@@ -147,7 +126,7 @@ class Zend_Matrixcode
         /*
          * Form full matrixcode class name
          */
-        $matrixcodeNamespace = 'Zend_Matrixcode';
+        $matrixcodeNamespace = 'Matrixcode';
         if (isset($matrixcodeConfig['matrixcodeNamespace'])) {
             $matrixcodeNamespace = $matrixcodeConfig['matrixcodeNamespace'];
         }
@@ -170,10 +149,10 @@ class Zend_Matrixcode
         /*
          * Verify that the object created is a descendent of the abstract matrixcode type.
          */
-        if (!$mcAdapter instanceof Zend_Matrixcode_Abstract) {
-            require_once 'Zend/Matrixcode/Exception.php';
-            throw new Zend_Matrixcode_Exception(
-                "Matrixcode class '$matrixcodeName' does not extend Zend_Matrixcode_Abstract"
+        if (!$mcAdapter instanceof Matrixcode_Abstract) {
+            require_once 'Matrixcode/Exception.php';
+            throw new Matrixcode_Exception(
+                "Matrixcode class '$matrixcodeName' does not extend Matrixcode_Abstract"
             );
         }
         return $mcAdapter;
@@ -186,7 +165,7 @@ class Zend_Matrixcode
      *
      * @param mixed $renderer           String name of renderer class, or Zend_Config object.
      * @param mixed $rendererConfig     OPTIONAL; an array or Zend_Config object with renderer parameters.
-     * @return Zend_Matrixcode_Renderer_Abstract
+     * @return Matrixcode_Renderer_Abstract
      */
     public static function getRenderer($renderer = 'image', $rendererConfig = array())
     {
@@ -210,8 +189,8 @@ class Zend_Matrixcode
          * Verify that renderer parameters are in an array.
          */
         if (!is_array($rendererConfig)) {
-            require_once 'Zend/Matrixcode/Exception.php';
-            $e = new Zend_Matrixcode_Exception(
+            require_once 'Matrixcode/Exception.php';
+            $e = new Matrixcode_Exception(
                 'Renderer parameters must be in an array or a Zend_Config object'
             );
             throw $e;
@@ -221,8 +200,8 @@ class Zend_Matrixcode
          * Verify that a renderer name has been specified.
          */
         if (!is_string($renderer) || empty($renderer)) {
-            require_once 'Zend/Matrixcode/Exception.php';
-            $e = new Zend_Matrixcode_Exception(
+            require_once 'Matrixcode/Exception.php';
+            $e = new Matrixcode_Exception(
                 'Renderer name must be specified in a string'
             );
             throw $e;
@@ -231,7 +210,7 @@ class Zend_Matrixcode
         /*
          * Form full renderer class name
          */
-        $rendererNamespace = 'Zend_Matrixcode_Renderer';
+        $rendererNamespace = 'Matrixcode_Renderer';
         if (isset($rendererConfig['rendererNamespace'])) {
             $rendererNamespace = $rendererConfig['rendererNamespace'];
         }
@@ -254,10 +233,10 @@ class Zend_Matrixcode
         /*
          * Verify that the object created is a descendent of the abstract renderer type.
          */
-        if (!$rdrAdapter instanceof Zend_Matrixcode_Renderer_Abstract) {
-            require_once 'Zend/Matrixcode/Exception.php';
-            $e = new Zend_Matrixcode_Exception(
-                "Renderer class '$rendererName' does not extend Zend_Matrixcode_Renderer_Abstract"
+        if (!$rdrAdapter instanceof Matrixcode_Renderer_Abstract) {
+            require_once 'Matrixcode/Exception.php';
+            $e = new Matrixcode_Exception(
+                "Renderer class '$rendererName' does not extend Matrixcode_Renderer_Abstract"
             );
             throw $e;
         }

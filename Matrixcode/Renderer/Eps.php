@@ -1,49 +1,30 @@
 <?php
+/** @see Matrixcode_Renderer_Abstract*/
+require_once 'Matrixcode/Renderer/Abstract.php';
+
 
 /**
- * Zend Framework
+ * Matrixcode_Renderer_Eps
  *
- * LICENSE
- *
- * This source file is subject to version 1.0 of the Zend Framework
- * license, that is bundled with this package in the file LICENSE.txt, and
- * is available through the world-wide-web at the following URL:
- * http://framework.zend.com/license/new-bsd. If you did not receive
- * a copy of the Zend Framework license and are unable to obtain it
- * through the world-wide-web, please send a note to license@zend.com
- * so we can mail you a copy immediately.
- *
- * @package    Zend_Matrixcode
+ * @package    Matrixcode
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * 
+ *
  * Thanks to Paul Bourke http://local.wasp.uwa.edu.au/~pbourke/dataformats/postscript/
  */
-
-/** @see Zend_Matrixcode_Renderer_Abstract*/
-require_once 'Zend/Matrixcode/Renderer/Abstract.php';
-
-
-/**
- * Zend_Matrixcode_Renderer_Eps
- *
- * @package    Zend_Matrixcode
- * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-class Zend_Matrixcode_Renderer_Eps extends Zend_Matrixcode_Renderer_Abstract
+class Matrixcode_Renderer_Eps extends Matrixcode_Renderer_Abstract
 {
 	
 	/**
 	 * Retrieve the scale of the code
 	 * @return int
-	 * @throws Zend_Matrixcode_Renderer_Exception
+	 * @throws Matrixcode_Renderer_Exception
 	 */
 	public function getScale() {
 		$module_size = $this->_matrixcode->getModuleSize();
 		if($module_size[0] != $module_size[1]) {
-			require_once 'Zend/Matrixcode/Renderer/Exception.php';
-            throw new Zend_Matrixcode_Renderer_Exception(
+			require_once 'Matrixcode/Renderer/Exception.php';
+            throw new Matrixcode_Renderer_Exception(
                 'So far only square modules are supported. The current module size settings of '.$module_size[0].'x'.$module_size[1].' indicate a different rectangular shape.'
             );
 		}
@@ -52,13 +33,13 @@ class Zend_Matrixcode_Renderer_Eps extends Zend_Matrixcode_Renderer_Abstract
 	
 	
 	/**
-	 * @see Zend_Matrixcode_Renderer_Abstract::_checkParams()
+	 * @see Matrixcode_Renderer_Abstract::_checkParams()
 	 */
 	protected function _checkParams() {}
 
 	
 	/**
-	 * @see Zend_Matrixcode_Renderer_Abstract::_renderMatrixcode()
+	 * @see Matrixcode_Renderer_Abstract::_renderMatrixcode()
 	 */
 	protected function _renderMatrixcode()
 	{
@@ -86,7 +67,7 @@ class Zend_Matrixcode_Renderer_Eps extends Zend_Matrixcode_Renderer_Abstract
 		
   		$output = 
     	'%!PS-Adobe EPSF-3.0'."\n".
-    	'%%Creator: Zend_Matrixcode_Qrcode'."\n".
+    	'%%Creator: Matrixcode_Qrcode'."\n".
 		'%%Title: QRcode'."\n".
 		'%%CreationDate: '.date('Y-m-d')."\n".
 		'%%DocumentData: Clean7Bit'."\n".

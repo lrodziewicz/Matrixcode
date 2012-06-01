@@ -1,39 +1,19 @@
 <?php
 /**
- * Zend Framework
+ * Matrixcode_Abstract
  *
- * LICENSE
- *
- * This source file is subject to version 1.0 of the Zend Framework
- * license, that is bundled with this package in the file LICENSE.txt, and
- * is available through the world-wide-web at the following URL:
- * http://framework.zend.com/license/new-bsd. If you did not receive
- * a copy of the Zend Framework license and are unable to obtain it
- * through the world-wide-web, please send a note to license@zend.com
- * so we can mail you a copy immediately.
- *
- * @package    Zend_Matrixcode
+ * @package    Matrixcode
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
-
-
-/**
- * Zend_Matrixcode_Abstract
- *
- * @package    Zend_Matrixcode
- * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-abstract class Zend_Matrixcode_Abstract
+abstract class Matrixcode_Abstract
 {
 
 	/**
      * Namespace of the matrixcode for autoloading
      * @var string
      */
-    protected $_matrixcodeNamespace = 'Zend_Matrixcode';
+    protected $_matrixcodeNamespace = 'Matrixcode';
     
     /**
      * Matrixcode type
@@ -118,7 +98,7 @@ abstract class Zend_Matrixcode_Abstract
     /**
      * Set matrixcode state from options array
      * @param Zend_Config $config
-     * @return Zend_Matrixcode_Abstract
+     * @return Matrixcode_Abstract
      */
     public function setOptions($options)
     {
@@ -136,7 +116,7 @@ abstract class Zend_Matrixcode_Abstract
 	/**
      * Set matrixcode state from config object
      * @param Zend_Config $config
-     * @return Zend_Matrixcode_Abstract
+     * @return Matrixcode_Abstract
      */
     public function setConfig(Zend_Config $config)
     {
@@ -165,8 +145,8 @@ abstract class Zend_Matrixcode_Abstract
     	}else if(is_int($value)){
     		$this->_module_size = array($value,$value);
     	}else{
-    		require_once 'Zend/Matrixcode/Exception.php';
-            throw new Zend_Matrixcode_Exception(
+    		require_once 'Matrixcode/Exception.php';
+            throw new Matrixcode_Exception(
                 'Invalid module size'
             );
     	}	
@@ -187,8 +167,8 @@ abstract class Zend_Matrixcode_Abstract
 	/**
      * Set color of the code
      * @param string $value
-     * @return Zend_Matrixcode_Abstract
-     * @throw Zend_Matrixcode_Exception
+     * @return Matrixcode_Abstract
+     * @throw Matrixcode_Exception
      */
     public function setForeColor($value)
     {
@@ -197,8 +177,8 @@ abstract class Zend_Matrixcode_Abstract
         } elseif (is_numeric($value) && $value >= 0 && $value <= 16777125) {
             $this->_fr_color = intval($value);
         } else {
-            require_once 'Zend/Matrixcode/Exception.php';
-            throw new Zend_Matrixcode_Exception(
+            require_once 'Matrixcode/Exception.php';
+            throw new Matrixcode_Exception(
                 'Fore color must be set as #[0-9A-Fa-f]{6}'
             );
         }
@@ -217,8 +197,8 @@ abstract class Zend_Matrixcode_Abstract
     /**
      * Set the color of the background
      * @param integer $value
-     * @return Zend_Matrixcode_Abstract
-     * @throw Zend_Matrixcode_Exception
+     * @return Matrixcode_Abstract
+     * @throw Matrixcode_Exception
      */
     public function setBackgroundColor($value)
     {
@@ -227,8 +207,8 @@ abstract class Zend_Matrixcode_Abstract
         } elseif (is_numeric($value) && $value >= 0 && $value <= 16777125) {
             $this->_bg_color = intval($value);
         } else {
-            require_once 'Zend/Matrixcode/Exception.php';
-            throw new Zend_Matrixcode_Exception(
+            require_once 'Matrixcode/Exception.php';
+            throw new Matrixcode_Exception(
                 'Background color must be set as #[0-9A-F]{6}'
             );
         }
@@ -247,7 +227,7 @@ abstract class Zend_Matrixcode_Abstract
     /**
      * Activate/deactivate drawing of a border
      * @param boolean $value
-     * @return Zend_Matrixcode_Abstract
+     * @return Matrixcode_Abstract
      */
     public function setWithBorder($value)
     {
@@ -268,7 +248,7 @@ abstract class Zend_Matrixcode_Abstract
     /**
      * Set the padding
      * @param float | array $value
-     * @return Zend_Matrixcode_Abstract
+     * @return Matrixcode_Abstract
      */
     public function setPadding($value)
     {
@@ -277,8 +257,8 @@ abstract class Zend_Matrixcode_Abstract
     	}else if(is_int($value)){
     		$this->_padding = array($value,$value,$value,$value);
     	}else{
-    		require_once 'Zend/Matrixcode/Exception.php';
-            throw new Zend_Matrixcode_Exception(
+    		require_once 'Matrixcode/Exception.php';
+            throw new Matrixcode_Exception(
                 'Invalid padding value'
             );
     	}
@@ -298,7 +278,7 @@ abstract class Zend_Matrixcode_Abstract
 	/**
      * Set text to encode
      * @param string $value
-     * @return Zend_Matrixcode_Abstract
+     * @return Matrixcode_Abstract
      */
     public function setText($value)
     {
