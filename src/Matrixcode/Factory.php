@@ -1,5 +1,5 @@
 <?php
-namespace Matrixcode
+namespace Matrixcode;
 
 /**
  * Class for generating matrix codes (2 dimensional scan codes)
@@ -65,12 +65,12 @@ class Factory
             }
         }
         
-        $matrixcode = \Matrixcode\QRcode\Factory::factory($matrixcode, $matrixcodeConfig);
+        $matrixcode = new \Matrixcode\QRCode($matrixcode, $matrixcodeConfig);
         $renderer = \Matrixcode\Renderer\Factory::factory($renderer, $rendererConfig);
 
         $renderer->setMatrixcode($matrixcode);
         
-        return $this;
+        return $matrixcode;
     }
 
     

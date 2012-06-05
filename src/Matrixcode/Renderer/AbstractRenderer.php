@@ -1,14 +1,14 @@
 <?php
-namespace QRCode\Renderer;
+namespace Matrixcode\Renderer;
 
 /**
- * QRCode\Renderer\Abstract
+ * Matrixcode\Renderer\Abstract
  *
  * @package    Matrixcode
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Abstract 
+abstract class AbstractRenderer
 {   
     /**
      * Renderer type
@@ -18,7 +18,7 @@ abstract class Abstract
     
     /**
      * Matrixcode object
-     * @var Matrixcode_Abstract
+     * @var Matrixcode\AbstractMatrixcode
      */
 	protected $_matrixcode;
 	
@@ -42,14 +42,15 @@ abstract class Abstract
         if (is_array($options)) {
             $this->setOptions($options);
         }
-        $this->_type = strtolower(substr(get_class($this), strlen($this->_rendererNamespace) + 1));
+        $this->_type = get_class($this);
+        //$this->_type = strtolower(substr(get_class($this), strlen($this->_rendererNamespace) + 1));
     }
 
     
     /**
      * Set matrixcode state from options array
      * @param array $config
-     * @return Matrixcode\Renderer\Abstract
+     * @return Matrixcode\Renderer\AbstractRenderer
      */
     public function setOptions($options)
     {
@@ -96,10 +97,10 @@ abstract class Abstract
 	
     /**
      * Set the matrix code
-     * @param Matrixcode\QRCode\Abstract $matrixcode
+     * @param Matrixcode\AbstractMatrixcode $matrixcode
      * @return Matrixcode\Renderer\Abstract
      */
-	public function setMatrixcode(\Matrixcode\QRCode\Abstract $matrixcode)
+	public function setMatrixcode(\Matrixcode\AbstractMatrixcode $matrixcode)
 	{
 		$this->_matrixcode = $matrixcode;
 		return $this;

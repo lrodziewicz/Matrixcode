@@ -1,18 +1,18 @@
 <?php
-namespace QRCode;
+namespace Matrixcode;
 
-use QRCode\Specifiction,
-	QRCode\Renderer,
-	QRCode\Exception;
+use Matrixcode\QRCode,
+	Matrixcode\Renderer,
+	Matrixcode\Exception;
 
 /**
- * Matrixcode
+ * Matrixcode\QRCode
  *
  * @package    Matrixcode
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class QRCode extends Abstract
+class QRCode extends AbstractMatrixcode
 {
 	
 	/**
@@ -32,7 +32,7 @@ class QRCode extends Abstract
 	 * (L, M, Q or H)
 	 * @var string
 	 */
-	protected $_eccLevel = Matrixcode\Qrcode\Qrspecs::QR_ECC_M;
+	protected $_eccLevel = \Matrixcode\QRCode\Qrspecs::QR_ECC_M;
 	
 	/**
 	 * Version
@@ -72,7 +72,7 @@ class QRCode extends Abstract
     public function __construct ($options = null)
     {
     	// initialize padding with default
-    	$this->setPadding(Matrixcode_Qrcode_Qrspecs::DEFAULT_PADDING);
+    	$this->setPadding(\Matrixcode\QRCode\Qrspecs::DEFAULT_PADDING);
     	
         if (is_array($options)) {
             $this->setOptions($options);
@@ -91,16 +91,15 @@ class QRCode extends Abstract
     public function setEccLevel ($level)
     {
     	if($level != '') {
-			if(array_key_exists($level, Matrixcode_Qrcode_Qrspecs::$eccLevels)) {
+			if(array_key_exists($level, \Matrixcode\QRCode\Qrspecs::$eccLevels)) {
 				// level specified in letter format ('L', 'M', ...)
-    			$this->_eccLevel = Matrixcode_Qrcode_Qrspecs::$eccLevels[strtoupper($level)];
-			}else if(in_array($level, Matrixcode_Qrcode_Qrspecs::$eccLevels)) {
+    			$this->_eccLevel = \Matrixcode\QRCode\Qrspecs::$eccLevels[strtoupper($level)];
+			}else if(in_array($level, \Matrixcode\QRCcode\Qrspecs::$eccLevels)) {
 				// level specified in numeric format (0,1,...)
 				$this->_eccLevel = $level;
 			}
     	}else{
-    		require_once 'Matrixcode/Exception.php';
-            throw new Matrixcode_Qrcode_Exception(
+            throw new \Matrixcode\QRCode\Exception(
                 'Invalid value for the ECC level'
             );
     	}
@@ -119,16 +118,15 @@ class QRCode extends Abstract
     /**
      * Set version
      * @param int $version
-     * @throws Matrixcode_Qrcode_Exception
+     * @throws \Matrixcode\QRCode\Exception
      */
     public function setVersion ($version)
     {
-    	if(is_int($version) && $version <= Matrixcode_Qrcode_Qrspecs::QR_VERSION_MAX) {
+    	if(is_int($version) && $version <= \Matrixcode\QRCode\Qrspecs::QR_VERSION_MAX) {
     		$this->_version = $version;
     	}else{
-    		require_once 'Matrixcode/Exception.php';
-            throw new Matrixcode_Qrcode_Exception(
-                'The version of a QR code should be between 0 and '.Matrixcode_Qrcode_Qrspecs::QR_VERSION_MAX
+            throw new \Matrixcode\QRCode\Exception(
+                'The version of a QR code should be between 0 and '.\Matrixcode\QRCode\Qrspecs::QR_VERSION_MAX
             );
     	}
     }
@@ -152,8 +150,7 @@ class QRCode extends Abstract
     	if(is_int($parity) && $parity <= 255) {
     		$this->_parity = $parity;
     	}else{
-    		require_once 'Matrixcode/Exception.php';
-            throw new Matrixcode_Qrcode_Exception(
+            throw new \Matrixcode\QRCode\Exception(
                 'The parity of a QR code should be between 0 and 255'
             );
     	}
@@ -198,12 +195,12 @@ class QRCode extends Abstract
     {
     	if ( preg_match('/[^0-9]/', $this->getText()) ) { // if contains non-numerical characters
 		    if( preg_match('/[^0-9A-Z \$\*\%\+\-\.\/\:]/',$this->getText()) ) {
-		     	return Matrixcode_Qrcode_Qrspecs::QR_MODE_8;
+		     	return \Matrixcode\QRCode\Qrspecs::QR_MODE_8;
 			} else {
-		    	return Matrixcode_Qrcode_Qrspecs::QR_MODE_AN;
+		    	return \Matrixcode\QRCode\Qrspecs::QR_MODE_AN;
 			}
 		} else {
-			return Matrixcode_Qrcode_Qrspecs::QR_MODE_NUM;
+			return \Matrixcode\QRCode\Qrspecs::QR_MODE_NUM;
 		}
     }
     
@@ -229,7 +226,7 @@ class QRCode extends Abstract
      */
     protected function _getMaximumCodeWords()
     {
-    	return Matrixcode_Qrcode_Qrspecs::getMatrixCapacityWords($this->_version);
+    	return \Matrixcode\QRCode\Qrspecs::getMatrixCapacityWords($this->_version);
     }
     
     /**
@@ -289,7 +286,7 @@ class QRCode extends Abstract
 		    $n3_search = chr($bit_r).chr(255).chr($bit_r).chr($bit_r).chr($bit_r).chr(255).chr($bit_r);
 		
 		   	$demerit_n3 = substr_count($hor,$n3_search)*40;
-		   	$total_bits = Zend_Matrixcode_Qrcode_Qrspecs::getMatrixCapacityRemainder($this->_version) + ($this->_getMaximumCodeWords() << 3);
+		   	$total_bits = \Matrixcode\QRCode\Qrspecs::getMatrixCapacityRemainder($this->_version) + ($this->_getMaximumCodeWords() << 3);
 		   	$demerit_n4 = floor(abs(( (100* (substr_count($ver,chr($bit_r))/($total_bits)) )-50)/5))*10;
 		
 		   	$n2_search1 = "/".chr($bit_r).chr($bit_r)."+/";
@@ -360,7 +357,7 @@ class QRCode extends Abstract
 		
 		switch ($mode) {
 			
-			case Matrixcode_Qrcode_Qrspecs::QR_MODE_8:
+			case \Matrixcode\QRCode\Qrspecs::QR_MODE_8:
 				
 				$data_bits[$data_counter] = 8;   	// #version 1-9
 				
@@ -383,7 +380,7 @@ class QRCode extends Abstract
 				break;
 				
 				
-			case Matrixcode_Qrcode_Qrspecs::QR_MODE_AN:
+			case \Matrixcode\QRCode\Qrspecs::QR_MODE_AN:
 				
 				$data_bits[$data_counter] = 9;   	// #version 1-9
 				
@@ -417,7 +414,7 @@ class QRCode extends Abstract
 				break;
 				
 				
-			case Matrixcode_Qrcode_Qrspecs::QR_MODE_NUM:
+			case \Matrixcode\QRCode\Qrspecs::QR_MODE_NUM:
 				
 				$data_bits[$data_counter] = 10;  	// #version 1-9
 				
@@ -468,13 +465,13 @@ class QRCode extends Abstract
 		if (!$this->_version) {	// auto-select version
 	    	$this->_version = 1;
 			for($k=0; $k<40; $k++) {
-			    if ( Matrixcode_Qrcode_Qrspecs::$maxDataBits[$this->_eccLevel][$k] >= $total_data_bits+$codeword_num_plus[$this->_version] ) {
+			    if ( \Matrixcode\QRCode\Qrspecs::$maxDataBits[$this->_eccLevel][$k] >= $total_data_bits+$codeword_num_plus[$this->_version] ) {
 			        break;
 			    }
 			    $this->_version++;
 			}
 		}
-		$max_data_bits = Matrixcode_Qrcode_Qrspecs::$maxDataBits[$this->_eccLevel][($this->_version-1)];
+		$max_data_bits = \Matrixcode\QRCode\Qrspecs::$maxDataBits[$this->_eccLevel][($this->_version-1)];
 		
 		$total_data_bits += $codeword_num_plus[$this->_version];
 		$data_bits[$codeword_num_counter_value] += $codeword_num_plus[$this->_version];
@@ -491,9 +488,8 @@ class QRCode extends Abstract
 		    if ($total_data_bits < $max_data_bits){
 				$data_value[$data_counter] = 0;
 		        $data_bits[$data_counter] = $max_data_bits - $total_data_bits;
-		    } else if ($total_data_bits > $max_data_bits) {
-		    	require_once 'Matrixcode/Exception.php';
-            	throw new Matrixcode_Qrcode_Exception(
+		    } else if ($total_data_bits > $max_data_bits) {	
+            	throw new \Matrixcode\QRCode\Exception(
                 	'QR code overflow error. Version cannot hold all the encoded data.'
             	);
 		    }
@@ -535,7 +531,7 @@ class QRCode extends Abstract
 		
 		
 		// Read QR version data file
-		$byte_num = Matrixcode_Qrcode_Qrspecs::getMatrixCapacityRemainder($this->_version) + ($max_codewords << 3);
+		$byte_num = \Matrixcode\QRCode\Qrspecs::getMatrixCapacityRemainder($this->_version) + ($max_codewords << 3);
 		$filename = $this->_resourcesBasePath . DIRECTORY_SEPARATOR . $this->_resourceDataPath . DIRECTORY_SEPARATOR . "qrv".$this->_version."_".$this->_eccLevel.".dat";
 		if($fp = fopen ($filename, "rb")) {
 		    $matx	= fread($fp,$byte_num);
@@ -647,7 +643,7 @@ class QRCode extends Abstract
 		    }
 		}
 		
-		$matrix_remain = Matrixcode_Qrcode_Qrspecs::getMatrixCapacityRemainder($this->_version);
+		$matrix_remain = \Matrixcode\QRCode\Qrspecs::getMatrixCapacityRemainder($this->_version);
 		while ($matrix_remain){
 		    $remain_bit_temp = $matrix_remain + ($max_codewords << 3);
 		    $matrix_content[ $matrix_x_array[$remain_bit_temp] ][ $matrix_y_array[$remain_bit_temp] ]  =  ( 255 ^ $mask_array[$remain_bit_temp] );
@@ -659,7 +655,7 @@ class QRCode extends Abstract
 		//
 		// 8. Add information data
 		//
-		$format_information = Matrixcode_Qrcode_Qrspecs::$formatInformation;
+		$format_information = \Matrixcode\QRCode\Qrspecs::$formatInformation;
 		$symbol_format_info = str_pad(decbin(hexdec($format_information[$this->_eccLevel][$this->_maskData['number']])),15,'0',STR_PAD_LEFT);
 		for($i=0; $i<15; $i++) {
 		    $content = substr( $symbol_format_info, $i, 1);
@@ -740,7 +736,7 @@ class QRCode extends Abstract
     		return;
     	
     	$matrix_dimension = $this->_getMatrixDimension();
-    	$aPattern = Matrixcode_Qrcode_Qrspecs::getAlignmentPattern($this->_version);
+    	$aPattern = \Matrixcode\QRCode\Qrspecs::getAlignmentPattern($this->_version);
     	
     	$d = $aPattern[1] - $aPattern[0];
 		if($d < 0) {
@@ -800,7 +796,7 @@ class QRCode extends Abstract
     	}
     	
     	$matrix_dimension = $this->_getMatrixDimension();
-    	$vPattern = Matrixcode_Qrcode_Qrspecs::getVersionPattern($this->_version);
+    	$vPattern = \Matrixcode\QRCode\Qrspecs::getVersionPattern($this->_version);
     	for($x=0; $x<6; $x++) {
     		for($y=$matrix_dimension-11; $y<=$matrix_dimension-9; $y++) {
     			if($vPattern & 1 == 1) {
