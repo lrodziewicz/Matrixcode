@@ -6,7 +6,7 @@
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Matrixcode
+class Matrixcode_Factory
 {
     
     /**
@@ -107,7 +107,6 @@ class Matrixcode
          * Verify that matrixcode parameters are in an array.
          */
         if (!is_array($matrixcodeConfig)) {
-            require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Exception(
                 'Matrixcode parameters must be in an array or a Zend_Config object'
             );
@@ -117,8 +116,7 @@ class Matrixcode
          * Verify that a matrixcode name has been specified.
          */
         if (!is_string($matrixcode) || empty($matrixcode)) {
-            require_once 'Zend/Matrixcode/Exception.php';
-            throw new Zend_Matrixcode_Exception(
+            throw new Matrixcode_Exception(
                 'Matrixcode name must be specified in a string'
             );
         }
@@ -134,14 +132,6 @@ class Matrixcode
         $matrixcodeName = str_replace(' ', '_', ucwords(str_replace('_', ' ', $matrixcodeName)));
 
         /*
-         * Load the matrixcode class.
-         */
-        if (!class_exists($matrixcodeName)) {
-            require_once 'Zend/Loader.php';
-            Zend_Loader::loadClass($matrixcodeName);
-        }
-
-        /*
          * Create an instance of the matrixcode class.
          */
         $mcAdapter = new $matrixcodeName($matrixcodeConfig);
@@ -149,10 +139,9 @@ class Matrixcode
         /*
          * Verify that the object created is a descendent of the abstract matrixcode type.
          */
-        if (!$mcAdapter instanceof Matrixcode_Abstract) {
-            require_once 'Matrixcode/Exception.php';
+        if (!$mcAdapter instanceof Matrixcode_AbstractMatrixcode) {
             throw new Matrixcode_Exception(
-                "Matrixcode class '$matrixcodeName' does not extend Matrixcode_Abstract"
+                "Matrixcode class '$matrixcodeName' does not extend Matrixcode_AbstractMatrixcode"
             );
         }
         return $mcAdapter;
@@ -189,7 +178,6 @@ class Matrixcode
          * Verify that renderer parameters are in an array.
          */
         if (!is_array($rendererConfig)) {
-            require_once 'Matrixcode/Exception.php';
             $e = new Matrixcode_Exception(
                 'Renderer parameters must be in an array or a Zend_Config object'
             );
@@ -200,7 +188,6 @@ class Matrixcode
          * Verify that a renderer name has been specified.
          */
         if (!is_string($renderer) || empty($renderer)) {
-            require_once 'Matrixcode/Exception.php';
             $e = new Matrixcode_Exception(
                 'Renderer name must be specified in a string'
             );
@@ -218,14 +205,6 @@ class Matrixcode
         $rendererName = str_replace(' ', '_', ucwords(str_replace( '_', ' ', $rendererName)));
 
         /*
-         * Load the renderer class.
-         */
-        if (!class_exists($rendererName)) {
-            require_once 'Zend/Loader.php';
-            Zend_Loader::loadClass($rendererName);
-        }
-
-        /*
          * Create an instance of the renderer class.
          */
         $rdrAdapter = new $rendererName($rendererConfig);
@@ -233,8 +212,7 @@ class Matrixcode
         /*
          * Verify that the object created is a descendent of the abstract renderer type.
          */
-        if (!$rdrAdapter instanceof Matrixcode_Renderer_Abstract) {
-            require_once 'Matrixcode/Exception.php';
+        if (!$rdrAdapter instanceof Matrixcode_Renderer_AbstractRenderer) {
             $e = new Matrixcode_Exception(
                 "Renderer class '$rendererName' does not extend Matrixcode_Renderer_Abstract"
             );

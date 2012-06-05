@@ -1,10 +1,4 @@
 <?php
-require_once 'Matrixcode/Abstract.php';
-require_once 'Matrixcode/Qrcode/Qrspecs.php';
-
-
-
-
 /**
  * Matrixcode_Qrcode
  *
@@ -12,7 +6,7 @@ require_once 'Matrixcode/Qrcode/Qrspecs.php';
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Matrixcode_Qrcode extends Matrixcode_Abstract
+class Matrixcode_Qrcode extends Matrixcode_AbstractMatrixcode
 {
 	
 	/**
@@ -99,7 +93,6 @@ class Matrixcode_Qrcode extends Matrixcode_Abstract
 				$this->_eccLevel = $level;
 			}
     	}else{
-    		require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Qrcode_Exception(
                 'Invalid value for the ECC level'
             );
@@ -126,7 +119,6 @@ class Matrixcode_Qrcode extends Matrixcode_Abstract
     	if(is_int($version) && $version <= Matrixcode_Qrcode_Qrspecs::QR_VERSION_MAX) {
     		$this->_version = $version;
     	}else{
-    		require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Qrcode_Exception(
                 'The version of a QR code should be between 0 and '.Matrixcode_Qrcode_Qrspecs::QR_VERSION_MAX
             );
@@ -152,7 +144,6 @@ class Matrixcode_Qrcode extends Matrixcode_Abstract
     	if(is_int($parity) && $parity <= 255) {
     		$this->_parity = $parity;
     	}else{
-    		require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Qrcode_Exception(
                 'The parity of a QR code should be between 0 and 255'
             );
@@ -289,7 +280,7 @@ class Matrixcode_Qrcode extends Matrixcode_Abstract
 		    $n3_search = chr($bit_r).chr(255).chr($bit_r).chr($bit_r).chr($bit_r).chr(255).chr($bit_r);
 		
 		   	$demerit_n3 = substr_count($hor,$n3_search)*40;
-		   	$total_bits = Zend_Matrixcode_Qrcode_Qrspecs::getMatrixCapacityRemainder($this->_version) + ($this->_getMaximumCodeWords() << 3);
+		   	$total_bits = Matrixcode_Qrcode_Qrspecs::getMatrixCapacityRemainder($this->_version) + ($this->_getMaximumCodeWords() << 3);
 		   	$demerit_n4 = floor(abs(( (100* (substr_count($ver,chr($bit_r))/($total_bits)) )-50)/5))*10;
 		
 		   	$n2_search1 = "/".chr($bit_r).chr($bit_r)."+/";
@@ -492,7 +483,6 @@ class Matrixcode_Qrcode extends Matrixcode_Abstract
 				$data_value[$data_counter] = 0;
 		        $data_bits[$data_counter] = $max_data_bits - $total_data_bits;
 		    } else if ($total_data_bits > $max_data_bits) {
-		    	require_once 'Matrixcode/Exception.php';
             	throw new Matrixcode_Qrcode_Exception(
                 	'QR code overflow error. Version cannot hold all the encoded data.'
             	);
@@ -547,7 +537,6 @@ class Matrixcode_Qrcode extends Matrixcode_Abstract
 		    $rso = fread($fp,128);
 			fclose($fp);
 		}else{
-			require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Qrcode_Exception(
                 $filename. 'could not be opened'
             );

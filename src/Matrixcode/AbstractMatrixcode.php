@@ -1,12 +1,12 @@
 <?php
 /**
- * Matrixcode_Abstract
+ * AbstractMatrixcode
  *
  * @package    Matrixcode
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Matrixcode_Abstract
+abstract class Matrixcode_AbstractMatrixcode
 {
 
 	/**
@@ -145,7 +145,6 @@ abstract class Matrixcode_Abstract
     	}else if(is_int($value)){
     		$this->_module_size = array($value,$value);
     	}else{
-    		require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Exception(
                 'Invalid module size'
             );
@@ -177,7 +176,6 @@ abstract class Matrixcode_Abstract
         } elseif (is_numeric($value) && $value >= 0 && $value <= 16777125) {
             $this->_fr_color = intval($value);
         } else {
-            require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Exception(
                 'Fore color must be set as #[0-9A-Fa-f]{6}'
             );
@@ -207,7 +205,6 @@ abstract class Matrixcode_Abstract
         } elseif (is_numeric($value) && $value >= 0 && $value <= 16777125) {
             $this->_bg_color = intval($value);
         } else {
-            require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Exception(
                 'Background color must be set as #[0-9A-F]{6}'
             );
@@ -257,7 +254,6 @@ abstract class Matrixcode_Abstract
     	}else if(is_int($value)){
     		$this->_padding = array($value,$value,$value,$value);
     	}else{
-    		require_once 'Matrixcode/Exception.php';
             throw new Matrixcode_Exception(
                 'Invalid padding value'
             );

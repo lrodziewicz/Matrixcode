@@ -1,8 +1,4 @@
 <?php
-/** @see Matrixcode_Renderer_Abstract*/
-require_once 'Matrixcode/Renderer/Abstract.php';
-
-
 /**
  * Matrixcode_Renderer_Image
  *
@@ -10,7 +6,7 @@ require_once 'Matrixcode/Renderer/Abstract.php';
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Matrixcode_Renderer_Image extends Matrixcode_Renderer_Abstract
+class Matrixcode_Renderer_Image extends Matrixcode_Renderer_AbstractRenderer
 {
 	/**
      * List of authorized output format
@@ -49,7 +45,6 @@ class Matrixcode_Renderer_Image extends Matrixcode_Renderer_Abstract
         }
 
         if (!in_array($value, $this->_allowedImageType)) {
-            require_once 'Matrixcode/Renderer/Exception.php';
             throw new Matrixcode_Renderer_Exception(sprintf(
                 'Invalid type "%s" provided to setImageType()',
                 $value
@@ -98,7 +93,6 @@ class Matrixcode_Renderer_Image extends Matrixcode_Renderer_Abstract
 	public function getScale() {
 		$module_size = $this->_matrixcode->getModuleSize();
 		if($module_size[0] != $module_size[1]) {
-			require_once 'Matrixcode/Renderer/Exception.php';
             throw new Matrixcode_Renderer_Exception(
                 'So far only square modules are supported. The current module size settings of '.$module_size[0].'x'.$module_size[1].' indicate a different rectangular shape.'
             );
@@ -159,7 +153,6 @@ class Matrixcode_Renderer_Image extends Matrixcode_Renderer_Abstract
 		$output_size_height = $matrix_dim_with_padding_y * $this->getScale();
 		
 		if (is_numeric($this->_size_limit) && ($output_size_width > $this->_size_limit || $output_size_height > $this->_size_limit)) {
-			require_once 'Matrixcode/Renderer/Exception.php';
             throw new Matrixcode_Renderer_Exception(
                 'Image result too large'
             );

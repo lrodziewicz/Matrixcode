@@ -1,12 +1,12 @@
 <?php
 /**
- * Matrixcode_Renderer_Abstract
+ * Matrixcode_Renderer_AbstractRenderer
  *
  * @package    Matrixcode
  * @copyright  Copyright (c) 2009-2011 Peter Minne <peter@inthepocket.mobi>
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Matrixcode_Renderer_Abstract 
+abstract class Matrixcode_Renderer_AbstractRenderer
 {
 	
 	/**
