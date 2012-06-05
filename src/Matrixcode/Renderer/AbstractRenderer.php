@@ -116,7 +116,7 @@ abstract class Matrixcode_Renderer_AbstractRenderer
      * Set the matrix code
      * @param Matrixcode_Abstract $matrixcode
      */
-	public function setMatrixcode(Matrixcode_Abstract $matrixcode)
+	public function setMatrixcode(Matrixcode_AbstractMatrixcode $matrixcode)
 	{
 		$this->_matrixcode = $matrixcode;
 		return $this;

@@ -1,8 +1,4 @@
 <?php
-/** @see Matrixcode_Renderer_Abstract*/
-require_once 'Matrixcode/Renderer/Abstract.php';
-
-
 /**
  * Matrixcode_Renderer_Eps
  *
@@ -12,7 +8,7 @@ require_once 'Matrixcode/Renderer/Abstract.php';
  *
  * Thanks to Paul Bourke http://local.wasp.uwa.edu.au/~pbourke/dataformats/postscript/
  */
-class Matrixcode_Renderer_Eps extends Matrixcode_Renderer_Abstract
+class Matrixcode_Renderer_Eps extends Matrixcode_Renderer_AbstractRenderer
 {
 	
 	/**
@@ -23,7 +19,6 @@ class Matrixcode_Renderer_Eps extends Matrixcode_Renderer_Abstract
 	public function getScale() {
 		$module_size = $this->_matrixcode->getModuleSize();
 		if($module_size[0] != $module_size[1]) {
-			require_once 'Matrixcode/Renderer/Exception.php';
             throw new Matrixcode_Renderer_Exception(
                 'So far only square modules are supported. The current module size settings of '.$module_size[0].'x'.$module_size[1].' indicate a different rectangular shape.'
             );
