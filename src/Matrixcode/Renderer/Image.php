@@ -121,18 +121,18 @@ class Matrixcode_Renderer_Image extends Matrixcode_Renderer_AbstractRenderer
 		$matrix_dim_with_padding_y = $matrix_dimension + $padding[0] + $padding[2];
 		
     	// Create empty canvas
-    	$canvas = ImageCreate($matrix_dim_with_padding_x, $matrix_dim_with_padding_y);
+    	$canvas = imagecreate($matrix_dim_with_padding_x, $matrix_dim_with_padding_y);
     	
     	// Set colors/transparency
     	$fore_color = $this->_matrixcode->getForeColor();
     	$back_color = $this->_matrixcode->getBackgroundColor();
    		
-    	$symbolcolor = ImageColorAllocate($canvas, ($fore_color & 0xFF0000) >> 16, ($fore_color & 0x00FF00) >> 8, ($fore_color & 0x0000FF));
+    	$symbolcolor = imagecolorallocate($canvas, ($fore_color & 0xFF0000) >> 16, ($fore_color & 0x00FF00) >> 8, ($fore_color & 0x0000FF));
     	if(!empty($back_color)) {
-			$backgroundcolor = ImageColorAllocate($canvas, ($back_color & 0xFF0000) >> 16, ($back_color & 0x00FF00) >> 8, ($back_color & 0x0000FF));
+			$backgroundcolor = imagecolorallocate($canvas, ($back_color & 0xFF0000) >> 16, ($back_color & 0x00FF00) >> 8, ($back_color & 0x0000FF));
 			imagefill($canvas,0,0,$backgroundcolor);
     	}else{
-    		$transparent_bg = ImageColorAllocateAlpha($canvas,255,255,255,127);
+    		$transparent_bg = imagecolorallocatealpha($canvas,255,255,255,127);
 			imagefill($canvas,0,0,$transparent_bg);
     	}
     	
@@ -143,7 +143,7 @@ class Matrixcode_Renderer_Image extends Matrixcode_Renderer_AbstractRenderer
 		    	if( $matrix[$i][$j] ) {
 		    		$x = $i + $padding[3];
 		    		$y = $j + $padding[2];
-		    		ImageSetPixel($canvas,$x,$y,$symbolcolor);
+		    		imagesetpixel($canvas,$x,$y,$symbolcolor);
 		        }
 		    }
 		}
@@ -158,9 +158,9 @@ class Matrixcode_Renderer_Image extends Matrixcode_Renderer_AbstractRenderer
             );
 		}
 		
-		$output_image = ImageCreate($output_size_width, $output_size_height);
+		$output_image = imagecreate($output_size_width, $output_size_height);
 		
-		ImageCopyResized($output_image, $canvas, 0,0,0,0, $output_size_width, $output_size_height, $matrix_dim_with_padding_x, $matrix_dim_with_padding_y);
+		imagecopyresized($output_image, $canvas, 0,0,0,0, $output_size_width, $output_size_height, $matrix_dim_with_padding_x, $matrix_dim_with_padding_y);
 		
 		@imagedestroy($canvas);
 		
