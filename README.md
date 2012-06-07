@@ -6,7 +6,7 @@ Matrixcode is a PHP library for generating QR codes.
 
 ## Requirements
   - PHP 5.2 or later
-  - Zend_Config and Zend_Pdf classes
+  - GD extension for ImageRenderer
 
 ## Roadmap
   - make it indepentent from Zend Framework
