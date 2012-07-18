@@ -8,7 +8,7 @@
  */
 class Matrixcode_Factory
 {
-    
+
     /**
      * Factory for Matrixcode_Abstract classes.
      *
@@ -25,22 +25,22 @@ class Matrixcode_Factory
      *
      * If the first argument is of type Zend_Config and contains a 'params' key, it is assumed to contain
      * all parameters, and the second argument is ignored.
-     * 
-     * The third parameter specifies the type of renderer, where the fourth parameter is an array or 
+     *
+     * The third parameter specifies the type of renderer, where the fourth parameter is an array or
      * Zend_Config object containing the renderer parameters
      *
-     * @param string | array | Zend_Config $matrixcode
-     * @param array | Zend_Config $matrixcodeConfig
-     * @param string $renderer OPTIONAL
-     * @param array | Zend_Config $rendererConfig OPTIONAL
+     * @param  string | array | Zend_Config $matrixcode
+     * @param  array | Zend_Config          $matrixcodeConfig
+     * @param  string                       $renderer         OPTIONAL
+     * @param  array | Zend_Config          $rendererConfig   OPTIONAL
      * @return Zend_Matrixcode_Abstract
      * @throws Zend_Matrixcode_Exception
      */
     public static function factory (
-    	$matrixcode,
-    	$matrixcodeConfig = array(),
-    	$renderer = 'image',
-    	$rendererConfig = array()
+        $matrixcode,
+        $matrixcodeConfig = array(),
+        $renderer = 'image',
+        $rendererConfig = array()
     ) {
         /*
          * Convert Zend_Config argument to plain string
@@ -62,7 +62,7 @@ class Matrixcode_Factory
                 $matrixcode = null;
             }
         }
-        
+
         try {
             $matrixcode = self::getMatrixcode($matrixcode, $matrixcodeConfig);
             $renderer = self::getRenderer($renderer, $rendererConfig);
@@ -71,16 +71,15 @@ class Matrixcode_Factory
         }
 
         $renderer->setMatrixcode($matrixcode);
+
         return $renderer;
     }
 
-    
-    
-	/**
+    /**
      * Matrixcode Constructor
      *
-     * @param mixed $matrixcode        String name of matrixcode class, or Zend_Config object.
-     * @param mixed $matrixcodeConfig  OPTIONAL; an array or Zend_Config object with matrixcode parameters
+     * @param  mixed               $matrixcode       String name of matrixcode class, or Zend_Config object.
+     * @param  mixed               $matrixcodeConfig OPTIONAL; an array or Zend_Config object with matrixcode parameters
      * @return Matrixcode_Abstract
      */
     public static function getMatrixcode($matrixcode, $matrixcodeConfig = array())
@@ -120,7 +119,7 @@ class Matrixcode_Factory
                 'Matrixcode name must be specified in a string'
             );
         }
-        
+
         /*
          * Form full matrixcode class name
          */
@@ -144,16 +143,15 @@ class Matrixcode_Factory
                 "Matrixcode class '$matrixcodeName' does not extend Matrixcode_AbstractMatrixcode"
             );
         }
+
         return $mcAdapter;
     }
-    
-    
-    
-	/**
+
+    /**
      * Renderer Constructor
      *
-     * @param mixed $renderer           String name of renderer class, or Zend_Config object.
-     * @param mixed $rendererConfig     OPTIONAL; an array or Zend_Config object with renderer parameters.
+     * @param  mixed                        $renderer       String name of renderer class, or Zend_Config object.
+     * @param  mixed                        $rendererConfig OPTIONAL; an array or Zend_Config object with renderer parameters.
      * @return Matrixcode_Renderer_Abstract
      */
     public static function getRenderer($renderer = 'image', $rendererConfig = array())
@@ -218,25 +216,24 @@ class Matrixcode_Factory
             );
             throw $e;
         }
+
         return $rdrAdapter;
     }
-    
-    
-    
+
     /**
      * Proxy to renderer render() method
-     * 
-     * @param string | array | Zend_Config $matrixcode
-     * @param array | Zend_Config $matrixcodeConfig
-     * @param string $renderer OPTIONAL
-     * @param array | Zend_Config $rendererConfig OPTIONAL
+     *
+     * @param  string | array | Zend_Config $matrixcode
+     * @param  array | Zend_Config          $matrixcodeConfig
+     * @param  string                       $renderer         OPTIONAL
+     * @param  array | Zend_Config          $rendererConfig   OPTIONAL
      * @return mixed
      */
     public static function render (
-    	$matrixcode,
-    	$matrixcodeConfig = array(),
-    	$renderer = 'image',
-    	$rendererConfig = array()
+        $matrixcode,
+        $matrixcodeConfig = array(),
+        $renderer = 'image',
+        $rendererConfig = array()
     ) {
         return self::factory ($matrixcode, $matrixcodeConfig, $renderer, $rendererConfig)->render();
     }

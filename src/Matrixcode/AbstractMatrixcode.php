@@ -9,30 +9,30 @@
 abstract class Matrixcode_AbstractMatrixcode
 {
 
-	/**
+    /**
      * Namespace of the matrixcode for autoloading
      * @var string
      */
     protected $_matrixcodeNamespace = 'Matrixcode';
-    
+
     /**
      * Matrixcode type
      * @var string
      */
     protected $_type = null;
-	
+
     /**
      * Size (in units) of a single matrixcode module (the 'black dots')
      * @var array array(width, height)
      */
     protected $_module_size = array(1,1);
-    
+
     /**
      * Calculated width of the code
      * @var int
      */
     protected $_calculated_width;
-    
+
     /**
      * Calculated height of the code
      * @var int
@@ -68,20 +68,17 @@ abstract class Matrixcode_AbstractMatrixcode
      * @var string
      */
     protected $_text = null;
-    
+
     /**
-     * Array containing the modules 
+     * Array containing the modules
      * (2 dimensional array representing the 2 dimensional code)
      * @var array
      */
     protected $_matrix_table = null;
 
-   
-    
-    
     /**
      * Constructor
-     * @param array | Zend_Config $options 
+     * @param  array | Zend_Config $options
      * @return void
      */
     public function __construct ($options = null)
@@ -94,37 +91,35 @@ abstract class Matrixcode_AbstractMatrixcode
         $this->_type = strtolower(substr(get_class($this), strlen($this->_matrixcodeNamespace) + 1));
     }
 
-    
     /**
      * Set matrixcode state from options array
-     * @param Zend_Config $config
+     * @param  Zend_Config         $config
      * @return Matrixcode_Abstract
      */
     public function setOptions($options)
     {
-    	foreach ($options as $key => $value) {
+        foreach ($options as $key => $value) {
             $normalized = ucfirst($key);
             $method = 'set' . $normalized;
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }
+
         return $this;
     }
-    
-   
-	/**
+
+    /**
      * Set matrixcode state from config object
-     * @param Zend_Config $config
+     * @param  Zend_Config         $config
      * @return Matrixcode_Abstract
      */
     public function setConfig(Zend_Config $config)
     {
         return $this->setOptions($config->toArray());
     }
-    
-    
-	/**
+
+    /**
      * Retrieve type of matrixcode
      * @return string
      */
@@ -132,40 +127,38 @@ abstract class Matrixcode_AbstractMatrixcode
     {
         return $this->_type;
     }
-    
-    
+
     /**
      * Set module size
      * @param int | array $size
      */
     public function setModuleSize($value)
-    {    	
-    	if(is_array($value) && count($value) == 2) {
-    		$this->_module_size = $value;
-    	}else if(is_int($value)){
-    		$this->_module_size = array($value,$value);
-    	}else{
+    {
+        if (is_array($value) && count($value) == 2) {
+            $this->_module_size = $value;
+        } elseif (is_int($value)) {
+            $this->_module_size = array($value,$value);
+        } else {
             throw new Matrixcode_Exception(
                 'Invalid module size'
             );
-    	}	
-    	return $this;
+        }
+
+        return $this;
     }
-    
-    
+
     /**
      * Retrieve module size
      * @return array
      */
     public function getModuleSize()
     {
-    	return $this->_module_size;
+        return $this->_module_size;
     }
-    
-    
-	/**
+
+    /**
      * Set color of the code
-     * @param string $value
+     * @param  string              $value
      * @return Matrixcode_Abstract
      * @throw Matrixcode_Exception
      */
@@ -180,6 +173,7 @@ abstract class Matrixcode_AbstractMatrixcode
                 'Fore color must be set as #[0-9A-Fa-f]{6}'
             );
         }
+
         return $this;
     }
 
@@ -194,7 +188,7 @@ abstract class Matrixcode_AbstractMatrixcode
 
     /**
      * Set the color of the background
-     * @param integer $value
+     * @param  integer             $value
      * @return Matrixcode_Abstract
      * @throw Matrixcode_Exception
      */
@@ -209,6 +203,7 @@ abstract class Matrixcode_AbstractMatrixcode
                 'Background color must be set as #[0-9A-F]{6}'
             );
         }
+
         return $this;
     }
 
@@ -223,16 +218,16 @@ abstract class Matrixcode_AbstractMatrixcode
 
     /**
      * Activate/deactivate drawing of a border
-     * @param boolean $value
+     * @param  boolean             $value
      * @return Matrixcode_Abstract
      */
     public function setWithBorder($value)
     {
         $this->_withBorder = (bool) $value;
+
         return $this;
     }
 
-    
     /**
      * Return if border needs to be drawn or not
      * @return boolean
@@ -241,44 +236,45 @@ abstract class Matrixcode_AbstractMatrixcode
     {
         return $this->_withBorder;
     }
-    
+
     /**
      * Set the padding
-     * @param float | array $value
+     * @param  float | array       $value
      * @return Matrixcode_Abstract
      */
     public function setPadding($value)
     {
-    	if(is_array($value) && count($value) == 4) {
-    		$this->_padding = $value;
-    	}else if(is_int($value)){
-    		$this->_padding = array($value,$value,$value,$value);
-    	}else{
+        if (is_array($value) && count($value) == 4) {
+            $this->_padding = $value;
+        } elseif (is_int($value)) {
+            $this->_padding = array($value,$value,$value,$value);
+        } else {
             throw new Matrixcode_Exception(
                 'Invalid padding value'
             );
-    	}
-    	return $this;
+        }
+
+        return $this;
     }
-    
+
     /**
      * Retrieve the padding
      * @return array
      */
     public function getPadding()
     {
-    	return $this->_padding;
+        return $this->_padding;
     }
-    
-    
-	/**
+
+    /**
      * Set text to encode
-     * @param string $value
+     * @param  string              $value
      * @return Matrixcode_Abstract
      */
     public function setText($value)
     {
         $this->_text = trim($value);
+
         return $this;
     }
 
@@ -290,52 +286,51 @@ abstract class Matrixcode_AbstractMatrixcode
     {
         return $this->_text;
     }
-    
+
     /**
      * Set the calculated width
      * @param float $width
      */
     protected function _setCalculatedWidth($value)
     {
-    	$this->_calculated_width = $value;
+        $this->_calculated_width = $value;
     }
-    
-	/**
+
+    /**
      * Set the calculated height
      * @param float $height
      */
     protected function _setCalculatedHeight($value)
     {
-    	$this->_calculated_height = $value;
+        $this->_calculated_height = $value;
     }
-    
+
     /**
      * Retrieve the calculated width of the code
      * @return float
      */
     public function getWidth()
     {
-    	return $this->_calculated_width;
+        return $this->_calculated_width;
     }
-    
+
     /**
      * Retrieve the calculated height of the code
      * @return float
      */
     public function getHeight()
     {
-    	return $this->_calculated_height;
+        return $this->_calculated_height;
     }
-    
+
     /**
      * Retrieve the matrix
      * @return array
      */
     public function getMatrix()
     {
-    	return $this->_matrix_table;
+        return $this->_matrix_table;
     }
-    
 
     /**
      * Complete drawing of the matrixcode
@@ -346,7 +341,6 @@ abstract class Matrixcode_AbstractMatrixcode
         $this->_checkParams();
         $this->_matrix_table = $this->_prepareMatrixcode();
     }
-    
 
     /**
      * Checking of parameters after all settings
@@ -354,8 +348,7 @@ abstract class Matrixcode_AbstractMatrixcode
      * @return void
      */
     abstract protected function _checkParams();
-    
-    
+
     /**
      * Method that prepares the matrix
      * @return array
